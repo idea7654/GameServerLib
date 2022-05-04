@@ -3,8 +3,6 @@
 
 void IOCP_Child::Receive(std::string str)
 {
-	// 클라이언트 -> 서버, 메시지 수신할 때 처리함수
-
 	printf_s("receive client msg\n");
 }
 

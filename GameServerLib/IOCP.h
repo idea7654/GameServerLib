@@ -4,7 +4,8 @@
 #include <WinSock2.h>
 #include <thread>
 #include <vector>
-
+#include <mutex>
+#include <iostream>
 
 
 #define MAX_BUFFER	1024
@@ -49,5 +50,6 @@ private:
 	bool			m_bAccept;			// 요청 동작 플래그
 	bool			m_bWorkerThread;	// 작업 스레드 동작 플래그
 	//HANDLE*			m_pWorkerHandle;	// 작업 스레드 핸들
+	std::mutex		mMutex;
 	std::vector<std::thread> mThreadVec;
 };

@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "IOCP.h"
+﻿#include "IOCP.h"
 #include <process.h>
 
 unsigned int WINAPI CallWorkerThread(LPVOID p)
@@ -141,29 +140,12 @@ bool IOCompletionPort::CreateWorkerThread()
 	printf_s("[INFO] CPU 갯수 : %d\n", sysInfo.dwNumberOfProcessors);
 	// 적절한 작업 스레드의 갯수는 (CPU * 2) + 1
 	int nThreadCnt = sysInfo.dwNumberOfProcessors * 2;
-
-	// thread handler 선언
-	//m_pWorkerHandle = new HANDLE[nThreadCnt];
-	//mThreadVec.push_back(std::thread());
 	
 	// thread 생성
 	for (int i = 0; i < nThreadCnt; i++)
 	{
 		//std::thread mThread (CallWorkerThread(this));
 		mThreadVec.push_back(std::thread (CallWorkerThread,this));
-
-		//m_pWorkerHandle[i] = (HANDLE*)_beginthreadex(NULL, 0, &CallWorkerThread, this, CREATE_SUSPENDED, &threadId); //c++ 11 쓰레드 표준 추가됨
-		//if (m_pWorkerHandle[i] == NULL)
-
-		//mThreadVec[i] = (std::thread)_beginthreadex(NULL, 0, &CallWorkerThread, this, CREATE_SUSPENDED, &threadId);
-		/*if(mThreadVec[i])
-		{
-			printf_s("[ERROR] Worker Thread 생성 실패\n");
-			return false;
-		}*/
-		//ResumeThread(mThreadVec[i].native_handle());
-
-		//ResumeThread(m_pWorkerHandle[i]);
 	}
 	printf_s("[INFO] Worker Thread 시작...\n");
 	return true;
@@ -208,27 +190,9 @@ void IOCompletionPort::WorkerThread()
 		}
 		else
 		{
-			//여기 부분을 가상함수로 바꾸기
-
-			//printf_s("[INFO] 메시지 수신- Bytes : [%d], Msg : [%s]\n", pSocketInfo->dataBuf.len, pSocketInfo->dataBuf.buf);
 			Receive("receive Message");
 
-			// 클라이언트의 응답을 그대로 송신
-			
-			/*
-			nResult = WSASend(pSocketInfo->socket, &(pSocketInfo->dataBuf), 1, &sendBytes, dwFlags, NULL, NULL);
-
-			if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
-			{
-				printf_s("[ERROR] WSASend 실패 : ", WSAGetLastError());
-			}
-			*/
-
 			SendMsg("Send Message");
-
-
-			//printf_s("[INFO] 메시지 송신 - Bytes : [%d], Msg : [%s]\n", pSocketInfo->dataBuf.len, pSocketInfo->dataBuf.buf);
-			
 
 			//stSOCKETINFO 데이터 초기화
 			ZeroMemory(&(pSocketInfo->overlapeed), sizeof(OVERLAPPED));
@@ -253,28 +217,12 @@ void IOCompletionPort::WorkerThread()
 
 void IOCompletionPort::Receive(std::string str)
 {
-	/*stSOCKETINFO* pSocketInfo;
-	pSocketInfo = m_pSocketInfo;
-
-	printf_s("[%s]", str.c_str());
-	printf_s("[INFO] 메시지 송신 - Bytes : [%d], Msg : [%s]\n", pSocketInfo->dataBuf.len, pSocketInfo->dataBuf.buf);*/
+	std::lock_guard<std::mutex> guard(mMutex);
 }
 
 void IOCompletionPort::SendMsg(const char* sendMsg)
 {
-	/*stSOCKETINFO* pSocketInfo;
-	pSocketInfo = m_pSocketInfo;
-
-	int nSendLen = send(pSocketInfo->socket, sendMsg, strlen(sendMsg), 0);
-
-	if (nSendLen == -1)
-	{
-		printf_s("Error : %d\n", WSAGetLastError());
-	}
-
-	printf_s("Message sended : bytes[%d], message : [%s]\n", nSendLen, sendMsg);*/
-
-	//printf_s("[INFO] 메시지 송신 - Bytes : [%d], Msg : [%s]\n", pSocketInfo->dataBuf.len, pSocketInfo->dataBuf.buf);
+	std::lock_guard<std::mutex> guard(mMutex);
 }
 
 stSOCKETINFO* IOCompletionPort::GetpSocketInfo()

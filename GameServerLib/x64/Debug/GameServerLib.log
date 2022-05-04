@@ -1,0 +1,7 @@
+﻿  GameServerLib.cpp
+c:\users\user\desktop\vs_project\gameserverlib\gameserverlib\gameserverlib.cpp(10): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
+  IOCP.cpp
+c:\users\user\desktop\vs_project\gameserverlib\gameserverlib\iocp.cpp(283): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
+  IOCP_Child.cpp
+c:\users\user\desktop\vs_project\gameserverlib\gameserverlib\iocp_child.cpp(30): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
+  코드를 생성하고 있습니다...
