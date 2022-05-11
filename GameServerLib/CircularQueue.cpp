@@ -1,6 +1,5 @@
 #include "CircularQueue.h"
 
-
 bool CircularQueue::Push(BYTE * pData, int pDataLength, std::string pRemoteAddress, unsigned short pRemotePort, int pProtocol)
 {
 	mLock.lock();

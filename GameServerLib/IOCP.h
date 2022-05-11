@@ -9,7 +9,7 @@
 
 
 #define MAX_BUFFER	1024
-#define SERVER_PORT 8000
+#define SERVER_PORT 9190
 
 struct stSOCKETINFO
 {

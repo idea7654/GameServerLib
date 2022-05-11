@@ -120,14 +120,20 @@ void IOCompletionPort::StartServer()
 
 		m_hIOCP = CreateIoCompletionPort((HANDLE)clientSocket, m_hIOCP, (DWORD)m_pSocketInfo, 0);
 
-		// 중첩 소켓을 지정하고 완료시 실행될 함수를 넘겨줌
-		nResult = WSARecv(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, &recvBytes, &flags, &(m_pSocketInfo->overlapeed), NULL);
-
+		nResult = WSASend(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, (LPDWORD)&m_pSocketInfo->sendBytes, 0, &m_pSocketInfo->overlapeed, NULL);
 		if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
 		{
 			printf_s("[ERROR] IO Pending 실패 : %d", WSAGetLastError());
 			return;
 		}
+		// 중첩 소켓을 지정하고 완료시 실행될 함수를 넘겨줌
+		/*nResult = WSARecv(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, &recvBytes, &flags, &(m_pSocketInfo->overlapeed), NULL);
+
+		if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
+		{
+			printf_s("[ERROR] IO Pending 실패 : %d", WSAGetLastError());
+			return;
+		}*/
 	}
 }
 
@@ -192,7 +198,7 @@ void IOCompletionPort::WorkerThread()
 		{
 			Receive("receive Message");
 
-			SendMsg("Send Message");
+			//SendMsg("Send Message");
 
 			//stSOCKETINFO 데이터 초기화
 			ZeroMemory(&(pSocketInfo->overlapeed), sizeof(OVERLAPPED));
