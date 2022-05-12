@@ -1,0 +1,29 @@
+namespace TcpProtocol.Define;
+
+union MESSAGE_ID
+{
+  S2C_TEST,
+  C2S_TEST
+}
+
+struct Vec3
+{
+  x:float;
+  y:float;
+  z:float;
+}
+
+table Message
+{
+  packet: MESSAGE_ID;
+}
+
+table S2C_TEST
+{
+  test: string;
+}
+
+table C2S_TEST
+{
+  test: int;
+}
