@@ -1,4 +1,4 @@
-<code>
+```c#
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,4 +40,4 @@ public class arrayTest : MonoBehaviour
         Debug.Log(s_tmp1);
     }
 }
-</code>
+```
