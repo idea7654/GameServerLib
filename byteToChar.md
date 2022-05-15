@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
+using System.Text; //System.Text에 있는 Encoding 사용
 
 public class arrayTest : MonoBehaviour
 {
