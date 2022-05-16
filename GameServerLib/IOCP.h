@@ -11,6 +11,14 @@
 #define MAX_BUFFER	1024
 #define SERVER_PORT 9190
 
+enum OVERLAPPED_TYPE
+{
+	ACCEPT = 1,
+	RECV,
+	SEND,
+	CLOSE
+};
+
 struct stSOCKETINFO
 {
 	WSAOVERLAPPED	overlapeed;
@@ -28,20 +36,21 @@ public:
 	~IOCompletionPort();
 
 	// 소켓 등록 및 서버 정보 설정
-	bool Initialize();
+	bool			Initialize();
 	// 서버 시작
-	void StartServer();
+	void			StartServer();
 	// 작업 스레드 생성
-	bool CreateWorkerThread();
+	bool			CreateWorkerThread();
 	// 작업 스레드
-	virtual void WorkerThread();
+	virtual void	WorkerThread();
 
 	// 수신
-	virtual void Receive(std::string str);
+	virtual void	Receive(unsigned char pPacket[], stSOCKETINFO* pSocket);
 	//송신
-	virtual void SendMsg(const char* sendMsg);
+	virtual void	SendMsg(unsigned char* sendMsg, stSOCKETINFO* pSocket, int packetSize);
+	void			Send(stSOCKETINFO* pSocket);
 
-	stSOCKETINFO* GetpSocketInfo();
+	stSOCKETINFO*	GetpSocketInfo();
 
 private:
 	stSOCKETINFO*	m_pSocketInfo;		// 소켓 정보

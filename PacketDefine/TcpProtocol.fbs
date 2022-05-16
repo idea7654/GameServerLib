@@ -3,7 +3,16 @@ namespace TcpProtocol.Define;
 union MESSAGE_ID
 {
   S2C_TEST,
-  C2S_TEST
+  C2S_TEST,
+  C2S_START_GAME,
+  S2C_START_GAME,
+  C2S_HANDOUT_CARD,
+  C2S_RING_BELL,
+  S2C_HANDOUT_CARD,
+  S2C_RING_BELL,
+  S2C_SOMEONE_DIE,
+  S2C_WIN,
+  S2C_FAIL
 }
 
 struct Vec3
@@ -27,3 +36,62 @@ table C2S_TEST
 {
   test: int;
 }
+
+table C2S_START_GAME
+{
+  message: string;
+}
+
+table S2C_START_GAME
+{
+  mynum: int;
+  mydeck: [CARD];
+}
+
+table CARD
+{
+  shape: string;
+  num: int;
+}
+
+table C2S_HANDOUT_CARD
+{
+  num: int;
+}
+
+table C2S_RING_BELL
+{
+  playernum: int;
+}
+
+table S2C_HANDOUT_CARD
+{
+  num: int;
+  card: CARD;
+}
+
+table S2C_RING_BELL
+{
+  playernum: int;
+}
+
+table S2C_SOMEONE_DIE
+{
+  playernum: int;
+}
+
+table S2C_WIN
+{
+  playernum: int;
+  playerone: int;
+  playertwo: int;
+  playerthree: int;
+  playerfour: int;
+}
+
+table S2C_FAIL
+{
+  playernum: int;
+}
+
+root_type Message;

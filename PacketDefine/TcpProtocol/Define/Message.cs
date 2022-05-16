@@ -23,6 +23,15 @@ public struct Message : IFlatbufferObject
   public TTable? Packet<TTable>() where TTable : struct, IFlatbufferObject { int o = __p.__offset(6); return o != 0 ? (TTable?)__p.__union<TTable>(o + __p.bb_pos) : null; }
   public TcpProtocol.Define.S2C_TEST PacketAsS2C_TEST() { return Packet<TcpProtocol.Define.S2C_TEST>().Value; }
   public TcpProtocol.Define.C2S_TEST PacketAsC2S_TEST() { return Packet<TcpProtocol.Define.C2S_TEST>().Value; }
+  public TcpProtocol.Define.C2S_START_GAME PacketAsC2S_START_GAME() { return Packet<TcpProtocol.Define.C2S_START_GAME>().Value; }
+  public TcpProtocol.Define.S2C_START_GAME PacketAsS2C_START_GAME() { return Packet<TcpProtocol.Define.S2C_START_GAME>().Value; }
+  public TcpProtocol.Define.C2S_HANDOUT_CARD PacketAsC2S_HANDOUT_CARD() { return Packet<TcpProtocol.Define.C2S_HANDOUT_CARD>().Value; }
+  public TcpProtocol.Define.C2S_RING_BELL PacketAsC2S_RING_BELL() { return Packet<TcpProtocol.Define.C2S_RING_BELL>().Value; }
+  public TcpProtocol.Define.S2C_HANDOUT_CARD PacketAsS2C_HANDOUT_CARD() { return Packet<TcpProtocol.Define.S2C_HANDOUT_CARD>().Value; }
+  public TcpProtocol.Define.S2C_RING_BELL PacketAsS2C_RING_BELL() { return Packet<TcpProtocol.Define.S2C_RING_BELL>().Value; }
+  public TcpProtocol.Define.S2C_SOMEONE_DIE PacketAsS2C_SOMEONE_DIE() { return Packet<TcpProtocol.Define.S2C_SOMEONE_DIE>().Value; }
+  public TcpProtocol.Define.S2C_WIN PacketAsS2C_WIN() { return Packet<TcpProtocol.Define.S2C_WIN>().Value; }
+  public TcpProtocol.Define.S2C_FAIL PacketAsS2C_FAIL() { return Packet<TcpProtocol.Define.S2C_FAIL>().Value; }
 
   public static Offset<TcpProtocol.Define.Message> CreateMessage(FlatBufferBuilder builder,
       TcpProtocol.Define.MESSAGE_ID packet_type = TcpProtocol.Define.MESSAGE_ID.NONE,
@@ -40,6 +49,8 @@ public struct Message : IFlatbufferObject
     int o = builder.EndTable();
     return new Offset<TcpProtocol.Define.Message>(o);
   }
+  public static void FinishMessageBuffer(FlatBufferBuilder builder, Offset<TcpProtocol.Define.Message> offset) { builder.Finish(offset.Value); }
+  public static void FinishSizePrefixedMessageBuffer(FlatBufferBuilder builder, Offset<TcpProtocol.Define.Message> offset) { builder.FinishSizePrefixed(offset.Value); }
 };
 
 

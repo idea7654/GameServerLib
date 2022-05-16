@@ -120,20 +120,20 @@ void IOCompletionPort::StartServer()
 
 		m_hIOCP = CreateIoCompletionPort((HANDLE)clientSocket, m_hIOCP, (DWORD)m_pSocketInfo, 0);
 
-		nResult = WSASend(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, (LPDWORD)&m_pSocketInfo->sendBytes, 0, &m_pSocketInfo->overlapeed, NULL);
-		if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
-		{
-			printf_s("[ERROR] IO Pending 실패 : %d", WSAGetLastError());
-			return;
-		}
+		//nResult = WSASend(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, (LPDWORD)&m_pSocketInfo->sendBytes, 0, &m_pSocketInfo->overlapeed, NULL);
+		//if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
+		//{
+		//	printf_s("[ERROR] IO Pending 실패 : %d", WSAGetLastError());
+		//	return;
+		//}
 		// 중첩 소켓을 지정하고 완료시 실행될 함수를 넘겨줌
-		/*nResult = WSARecv(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, &recvBytes, &flags, &(m_pSocketInfo->overlapeed), NULL);
+		nResult = WSARecv(m_pSocketInfo->socket, &m_pSocketInfo->dataBuf, 1, &recvBytes, &flags, &(m_pSocketInfo->overlapeed), NULL);
 
 		if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
 		{
 			printf_s("[ERROR] IO Pending 실패 : %d", WSAGetLastError());
 			return;
-		}*/
+		}
 	}
 }
 
@@ -196,9 +196,7 @@ void IOCompletionPort::WorkerThread()
 		}
 		else
 		{
-			Receive("receive Message");
-
-			//SendMsg("Send Message");
+			Receive((unsigned char*)pSocketInfo->messageBuffer, pSocketInfo);
 
 			//stSOCKETINFO 데이터 초기화
 			ZeroMemory(&(pSocketInfo->overlapeed), sizeof(OVERLAPPED));
@@ -209,6 +207,7 @@ void IOCompletionPort::WorkerThread()
 			pSocketInfo->sendBytes = 0;
 
 			dwFlags = 0;
+
 
 			// 클라이언트로부터 다시 응답을 받기 위해 WSARec를 호출
 			nResult = WSARecv(pSocketInfo->socket, &(pSocketInfo->dataBuf), 1, &recvBytes, &dwFlags, (LPWSAOVERLAPPED) & (pSocketInfo->overlapeed), NULL);
@@ -221,14 +220,38 @@ void IOCompletionPort::WorkerThread()
 	}
 }
 
-void IOCompletionPort::Receive(std::string str)
+void IOCompletionPort::Receive(unsigned char pPacket[], stSOCKETINFO* pSocket)
 {
 	std::lock_guard<std::mutex> guard(mMutex);
 }
 
-void IOCompletionPort::SendMsg(const char* sendMsg)
+void IOCompletionPort::SendMsg(unsigned char* sendMsg, stSOCKETINFO* pSocket, int packetSize)
 {
 	std::lock_guard<std::mutex> guard(mMutex);
+}
+
+void IOCompletionPort::Send(stSOCKETINFO* pSocket)
+{
+	std::lock_guard<std::mutex> guard(mMutex);
+	int nResult;
+	DWORD	sendBytes;
+	DWORD	dwFlags = 0;
+
+	nResult = WSASend(
+		pSocket->socket,
+		&(pSocket->dataBuf),
+		1,
+		&sendBytes,
+		dwFlags,
+		NULL,
+		NULL
+	);
+
+	if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
+	{
+		printf_s("[ERROR] WSASend 실패 : ", WSAGetLastError());
+	}
+
 }
 
 stSOCKETINFO* IOCompletionPort::GetpSocketInfo()

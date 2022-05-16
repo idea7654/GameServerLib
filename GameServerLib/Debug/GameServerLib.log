@@ -1,7 +1,8 @@
 ﻿  IOCP.cpp
-C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(91,8): warning C4101: 'recvBytes' :참조되지 않은 지역 변수입니다.
 C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(142,15): warning C4101: 'threadId' :참조되지 않은 지역 변수입니다.
-C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(218,58): warning C4474: 'printf_s' : 서식 문자열에 전달된 인수가 너무 많습니다.
-C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(218,58): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
+C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(217,58): warning C4474: 'printf_s' : 서식 문자열에 전달된 인수가 너무 많습니다.
+C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(217,58): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
 C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(167,8): warning C4101: 'sendBytes' :참조되지 않은 지역 변수입니다.
+C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(252,56): warning C4474: 'printf_s' : 서식 문자열에 전달된 인수가 너무 많습니다.
+C:\Users\user\Desktop\VS_Project\GameServerLib\GameServerLib\IOCP.cpp(252,56): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
   GameServerLib.vcxproj -> C:\Users\user\Desktop\VS_Project\GameServerLib\Debug\GameServerLib.lib
